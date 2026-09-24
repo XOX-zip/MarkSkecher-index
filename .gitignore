@@ -1,0 +1,10 @@
+# 个人头像涉及隐私，默认不上传（页面已内置 MS 兜底头像）
+images/
+
+# 系统杂项
+Thumbs.db
+.DS_Store
+
+# 编辑器
+.vscode/
+.idea/
