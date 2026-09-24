@@ -1,0 +1,412 @@
+/* ============================================================
+   games.css · 街机厅 / 游戏弹窗 / 时间线 / 徽章 / 箴言
+   ============================================================ */
+
+/* ---------- 区块引导语 ---------- */
+.section-lead {
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  line-height: 1.9;
+  margin: -34px 0 44px;
+  font-family: var(--font-mono);
+}
+
+/* ---------- 游戏卡片 ---------- */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 26px;
+}
+.game-card {
+  position: relative;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 34px 28px;
+  text-align: center;
+  cursor: none;
+  overflow: hidden;
+  transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s var(--ease-out);
+}
+.game-card:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.15), 0 18px 40px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px);
+}
+.game-card:nth-child(2) { transition-delay: 0.12s; }
+.game-card:nth-child(3) { transition-delay: 0.24s; }
+
+.game-preview {
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.5));
+  animation: bob 3s ease-in-out infinite;
+}
+.game-card:nth-child(2) .game-preview { animation-delay: -1s; }
+.game-card:nth-child(3) .game-preview { animation-delay: -2s; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.game-card h3 { color: #fff; margin-bottom: 10px; }
+.game-card p {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  min-height: 4.6em;
+}
+.btn-play {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--neon);
+  border: 1px solid var(--neon);
+  border-radius: 999px;
+  padding: 8px 26px;
+  transition: 0.3s;
+}
+.game-card:hover .btn-play {
+  background: var(--neon);
+  color: var(--bg);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+}
+
+/* ---------- 游戏弹窗 ---------- */
+.game-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 6, 12, 0.82);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s, visibility 0.35s;
+}
+.game-modal.open { opacity: 1; visibility: visible; }
+
+.game-modal-box {
+  width: min(92vw, 560px);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--bg-soft);
+  border: 1px solid var(--neon);
+  border-radius: var(--radius);
+  box-shadow: 0 0 50px rgba(0, 229, 255, 0.25), 0 30px 80px rgba(0, 0, 0, 0.7);
+  transform: scale(0.86) translateY(30px);
+  transition: transform 0.4s var(--ease-out);
+}
+.game-modal.open .game-modal-box { transform: none; }
+
+.game-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg-soft);
+  z-index: 2;
+}
+.game-modal-title {
+  font-family: var(--font-mono);
+  color: #fff;
+  font-weight: 700;
+}
+.game-score {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+}
+.game-score b { color: var(--neon); font-size: 1.1rem; }
+.game-close {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  cursor: none;
+  transition: 0.3s;
+}
+.game-close:hover {
+  color: var(--neon-3);
+  border-color: var(--neon-3);
+  box-shadow: 0 0 12px rgba(255, 46, 136, 0.4);
+}
+
+.game-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  min-height: 300px;
+}
+.game-hint {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  padding: 0 20px 16px;
+}
+
+/* 游戏内通用 */
+.game-canvas {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #080b13;
+  max-width: 100%;
+  height: auto;
+}
+.game-over-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(6, 8, 15, 0.86);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  color: #fff;
+  animation: fade-in 0.4s;
+}
+.game-over-panel h4 { color: var(--neon-3); font-size: 1.5rem; letter-spacing: 2px; }
+.game-over-panel .btn-restart {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--bg);
+  background: var(--neon);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 30px;
+  cursor: none;
+  transition: 0.3s;
+}
+.game-over-panel .btn-restart:hover { box-shadow: 0 0 20px rgba(0, 229, 255, 0.7); }
+@keyframes fade-in { from { opacity: 0; } }
+.stage-holder { position: relative; }
+
+/* ---------- 2048 棋盘 ---------- */
+.g2048-board {
+  display: grid;
+  grid-template-columns: repeat(4, 84px);
+  grid-template-rows: repeat(4, 84px);
+  gap: 10px;
+  padding: 12px;
+  background: #080b13;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.g2048-cell {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.04);
+}
+.g2048-cell[data-v="2"]    { color:#e2ecff; background:#1a2340; }
+.g2048-cell[data-v="4"]    { color:#e2ecff; background:#223160; }
+.g2048-cell[data-v="8"]    { color:#fff;    background:#2b4b8f; }
+.g2048-cell[data-v="16"]   { color:#fff;    background:#1d6fa5; box-shadow:0 0 10px rgba(0,229,255,.3) inset; }
+.g2048-cell[data-v="32"]   { color:#fff;    background:#0d9dab; box-shadow:0 0 12px rgba(0,229,255,.4) inset; }
+.g2048-cell[data-v="64"]   { color:#fff;    background:#7b5cff; box-shadow:0 0 14px rgba(123,92,255,.5) inset; }
+.g2048-cell[data-v="128"]  { color:#fff;    background:#9a3fe0; box-shadow:0 0 16px rgba(154,63,224,.6) inset; font-size:1.35rem; }
+.g2048-cell[data-v="256"]  { color:#fff;    background:#d4277f; box-shadow:0 0 18px rgba(212,39,127,.6) inset; font-size:1.35rem; }
+.g2048-cell[data-v="512"]  { color:#fff;    background:#ff2e88; box-shadow:0 0 20px rgba(255,46,136,.7) inset; font-size:1.35rem; }
+.g2048-cell[data-v="1024"] { color:#fff;    background:#00e5ff; box-shadow:0 0 24px rgba(0,229,255,.8) inset; font-size:1.15rem; }
+.g2048-cell[data-v="2048"] { color:#06080f; background:#fff;    box-shadow:0 0 30px rgba(255,255,255,.9) inset; font-size:1.15rem; }
+.g2048-cell.pop { animation: pop 0.18s var(--ease-out); }
+@keyframes pop { from { transform: scale(0.55); } }
+@media (max-width: 480px) {
+  .g2048-board { grid-template-columns: repeat(4, 68px); grid-template-rows: repeat(4, 68px); }
+}
+
+/* ---------- 记忆翻牌 ---------- */
+.memory-board {
+  display: grid;
+  grid-template-columns: repeat(4, 82px);
+  gap: 12px;
+}
+.mcard { perspective: 600px; cursor: none; }
+.mcard-inner {
+  position: relative;
+  width: 82px; height: 82px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s var(--ease-out);
+}
+.mcard.flipped .mcard-inner,
+.mcard.matched .mcard-inner { transform: rotateY(180deg); }
+.mcard-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  font-size: 2rem;
+}
+.mcard-back {
+  background: linear-gradient(135deg, #101830, #0b0f1a);
+  border: 1px solid var(--border);
+  color: var(--neon);
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+}
+.mcard-back::after { content: "?"; text-shadow: 0 0 10px rgba(0, 229, 255, 0.8); }
+.mcard-front {
+  background: var(--bg-soft);
+  border: 1px solid var(--neon-2);
+  transform: rotateY(180deg);
+}
+.mcard.matched .mcard-front {
+  border-color: var(--neon);
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.45);
+  animation: pop 0.3s var(--ease-out);
+}
+@media (max-width: 480px) {
+  .memory-board { grid-template-columns: repeat(4, 64px); }
+  .mcard-inner { width: 64px; height: 64px; }
+}
+
+/* ---------- 编程箴言 ---------- */
+.credo {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 46px 8vw 76px;
+  text-align: center;
+}
+.credo-mark {
+  font-family: Georgia, serif;
+  font-size: 4rem;
+  line-height: 0;
+  color: var(--neon-2);
+  vertical-align: -0.4em;
+  opacity: 0.85;
+}
+.credo p {
+  display: inline;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  color: var(--text);
+  line-height: 2;
+  transition: opacity 0.5s;
+}
+.credo-author {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--neon);
+  transition: opacity 0.5s;
+}
+.credo.fading p, .credo.fading .credo-author { opacity: 0; }
+
+/* ---------- 成长轨迹时间线 ---------- */
+.timeline {
+  position: relative;
+  padding: 10px 0;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 0; bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--neon) 12%, var(--neon-2) 88%, transparent);
+  opacity: 0.55;
+}
+.t-item {
+  position: relative;
+  width: 50%;
+  padding: 0 44px 56px;
+}
+.t-item:nth-child(odd) { left: 0; text-align: right; }
+.t-item:nth-child(even) { left: 50%; }
+/* 节点圆点 */
+.t-item::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--neon);
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.8);
+}
+.t-item:nth-child(odd)::before { right: -8px; }
+.t-item:nth-child(even)::before { left: -8px; }
+/* 交错入场：覆盖默认向上滑入 */
+.t-item.reveal { transform: translateY(30px); }
+
+.t-card {
+  display: inline-block;
+  text-align: left;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.t-card:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.18);
+}
+.t-card time {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--neon-3);
+  letter-spacing: 2px;
+}
+.t-card h3 { color: #fff; margin: 8px 0 10px; font-size: 1.08rem; }
+.t-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.85; }
+
+@media (max-width: 720px) {
+  .timeline::before { left: 10px; }
+  .t-item, .t-item:nth-child(even) { width: 100%; left: 0; text-align: left; padding: 0 0 44px 40px; }
+  .t-item:nth-child(odd) { text-align: left; }
+  .t-item:nth-child(odd)::before, .t-item:nth-child(even)::before { left: 3px; right: auto; }
+}
+
+/* ---------- 成就徽章 ---------- */
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 30px;
+}
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 10px 22px;
+  transition: 0.3s;
+  cursor: none;
+}
+.badge:hover {
+  color: var(--neon);
+  border-color: var(--neon);
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+  transform: translateY(-4px) rotate(-1.5deg);
+}
+
+/* ---------- 弹窗打开时锁背景 ---------- */
+body.modal-open { overflow: hidden; }
+body.modal-open .cursor-ring { z-index: 10001; }

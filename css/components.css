@@ -1,0 +1,372 @@
+/* ============================================================
+   components.css · 标签 / 按钮 / 卡片 / 终端 / 加载器 / 光标
+   ============================================================ */
+
+/* ---------- 标签 ---------- */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--neon);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 16px;
+  background: var(--card);
+  transition: 0.3s;
+}
+.tag:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+/* ---------- 发光按钮 ---------- */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 14px 36px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--bg);
+  background: linear-gradient(90deg, var(--neon), var(--neon-2));
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+  transition: box-shadow 0.3s;
+  will-change: transform;
+}
+.btn-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--neon), var(--neon-2));
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s;
+}
+.btn-glow:hover {
+  box-shadow: 0 10px 40px rgba(0, 229, 255, 0.4);
+}
+.btn-glow:hover::before { opacity: 0.7; }
+.btn-arrow { transition: transform 0.3s; }
+.btn-glow:hover .btn-arrow { transform: translateX(6px); }
+
+/* ---------- 统计块 ---------- */
+.stat {
+  text-align: center;
+  padding: 18px 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: 0.3s;
+}
+.stat:hover {
+  border-color: var(--neon);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  transform: translateY(-4px);
+}
+.stat-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--neon);
+}
+.stat-label { font-size: 0.78rem; color: var(--text-dim); }
+
+/* ---------- 终端窗口 ---------- */
+.terminal {
+  background: #0a0e18;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 229, 255, 0.06);
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border);
+}
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green { background: #28c840; }
+.terminal-title {
+  margin-left: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+.terminal-body {
+  padding: 22px;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 2;
+  overflow-x: auto;
+}
+.ln-prompt { color: var(--neon-3); font-weight: 700; }
+.ln-out { color: var(--text); }
+.ln-comment { color: var(--text-dim); }
+.ln-ok { color: #28c840; }
+.terminal-cursor { color: var(--neon); animation: blink 1s steps(1) infinite; }
+
+/* ---------- 技能卡 ---------- */
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px 26px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.35s;
+  transform-style: preserve-3d;
+}
+.skill-card:hover { border-color: var(--neon); }
+.skill-icon { font-size: 2rem; margin-bottom: 14px; }
+.skill-card h3 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
+.skill-card p { color: var(--text-dim); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.7; }
+
+.bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--neon), var(--neon-2));
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+  transition: width 1.4s var(--ease-out);
+}
+.skill-card.in-view .bar-fill { width: var(--w); }
+
+/* ---------- 作品卡 ---------- */
+.work-card {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 30px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.35s, border-color 0.35s;
+}
+.work-card:hover {
+  border-color: var(--neon);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5);
+}
+.work-glow {
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from 0deg, transparent 70%, var(--neon) 85%, var(--neon-2) 100%);
+  opacity: 0;
+  animation: spin 4s linear infinite;
+  transition: opacity 0.4s;
+}
+.work-card:hover .work-glow { opacity: 0.25; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.work-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--neon-2);
+  opacity: 0.7;
+}
+.work-card h3 { color: #fff; font-size: 1.15rem; margin: 10px 0 14px; position: relative; }
+.work-card p {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin-bottom: 22px;
+  position: relative;
+}
+.work-link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--neon);
+  position: relative;
+  transition: letter-spacing 0.3s;
+}
+.work-card:hover .work-link { letter-spacing: 2px; }
+
+/* ---------- 开场加载动画 ---------- */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  transition: opacity 0.6s, visibility 0.6s;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-logo {
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--neon);
+}
+.loader-bar {
+  width: 220px; height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.loader-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--neon), var(--neon-2));
+  animation: load 1.6s var(--ease-out) forwards;
+}
+@keyframes load { to { width: 100%; } }
+.loader-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--text-dim);
+}
+.loader-dots { animation: blink 1s steps(1) infinite; }
+
+/* ---------- 自定义光标 ---------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor-dot {
+  width: 7px; height: 7px;
+  background: var(--neon);
+  box-shadow: 0 0 10px var(--neon);
+}
+.cursor-ring {
+  width: 34px; height: 34px;
+  border: 1.5px solid rgba(0, 229, 255, 0.6);
+  transition: width 0.25s, height 0.25s, border-color 0.25s, background 0.25s;
+}
+.cursor-ring.hovering {
+  width: 56px; height: 56px;
+  background: rgba(0, 229, 255, 0.08);
+  border-color: var(--neon);
+}
+
+/* ---------- 顶部滚动进度条 ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 200;
+  background: transparent;
+}
+#scroll-bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--neon), var(--neon-3), var(--neon-2));
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.7);
+}
+
+/* ---------- 头像相框（关于我） ---------- */
+.avatar-frame {
+  position: relative;
+  width: 150px; height: 150px;
+  margin: 0 auto 36px;
+  border-radius: 50%;
+}
+/* 旋转霓虹光环 */
+.avatar-frame::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--neon), var(--neon-2), var(--neon-3), var(--neon));
+  animation: spin 4s linear infinite;
+  filter: blur(1px);
+}
+/* 光环辉光 */
+.avatar-frame::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--neon), var(--neon-2), var(--neon-3), var(--neon));
+  filter: blur(22px);
+  opacity: 0.45;
+  z-index: -1;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+.avatar-frame img {
+  position: relative;
+  z-index: 1;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--bg);
+  background: var(--bg);
+  transition: transform 0.4s var(--ease-out);
+}
+.avatar-frame:hover img { transform: scale(1.06); }
+/* 图片缺失时的兼容处理：显示 MS 初始头像 */
+.avatar-frame img.missing { display: none; }
+.avatar-fallback {
+  position: absolute;
+  inset: 4px;
+  z-index: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-soft);
+  border: 4px solid var(--bg);
+  font-family: var(--font-mono);
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--neon);
+}
+.avatar-frame img.missing ~ .avatar-fallback { display: flex; }
+/* 在线状态小绿点 */
+.avatar-frame .avatar-status {
+  position: absolute;
+  right: 12px; bottom: 12px;
+  z-index: 2;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #28c840;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 8px rgba(40, 200, 64, 0.8);
+  animation: status-ping 2s ease-out infinite;
+}
+@keyframes status-ping {
+  0% { box-shadow: 0 0 0 0 rgba(40, 200, 64, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(40, 200, 64, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(40, 200, 64, 0); }
+}
+
+/* ---------- 响应式补丁 ---------- */
+@media (max-width: 900px) {
+  .terminal { transform: none !important; }
+  .skill-card, .work-card { transform: none !important; }
+}

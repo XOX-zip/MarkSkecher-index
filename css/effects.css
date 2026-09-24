@@ -1,0 +1,126 @@
+/* ============================================================
+   effects.css · 故障文字 / 光晕 / 极光 / 噪点 / 滚动显现
+   ============================================================ */
+
+/* ---------- Glitch 故障文字 ---------- */
+.glitch { position: relative; }
+.glitch::before, .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.glitch::before {
+  color: var(--neon-3);
+  animation: glitch-a 3s infinite linear alternate-reverse;
+  clip-path: inset(20% 0 60% 0);
+}
+.glitch::after {
+  color: var(--neon);
+  animation: glitch-b 2.4s infinite linear alternate-reverse;
+  clip-path: inset(60% 0 15% 0);
+}
+@keyframes glitch-a {
+  0%, 92% { transform: none; opacity: 0; }
+  93% { transform: translate(-4px, 2px); opacity: 0.85; }
+  96% { transform: translate(3px, -1px); opacity: 0.6; }
+  100% { transform: none; opacity: 0; }
+}
+@keyframes glitch-b {
+  0%, 90% { transform: none; opacity: 0; }
+  91% { transform: translate(4px, -2px); opacity: 0.85; }
+  95% { transform: translate(-3px, 1px); opacity: 0.6; }
+  100% { transform: none; opacity: 0; }
+}
+/* Hero 大标题使用渐变填充，故障层需恢复可见颜色 */
+.hero-name.glitch::before, .hero-name.glitch::after {
+  -webkit-text-fill-color: initial;
+  background: none;
+}
+
+/* ---------- 光晕球 ---------- */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  animation: float 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.orb-1 { width: 420px; height: 420px; background: var(--neon-2); top: -80px; right: -60px; }
+.orb-2 { width: 340px; height: 340px; background: var(--neon); bottom: -60px; left: -80px; animation-delay: -4s; }
+.orb-3 { width: 260px; height: 260px; background: var(--neon-3); top: 40%; right: 18%; opacity: 0.18; animation-delay: -8s; }
+@keyframes float {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(40px, -50px) scale(1.15); }
+}
+
+/* ---------- 极光渐变层 ---------- */
+.aurora {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  background:
+    radial-gradient(40% 55% at 20% 25%, rgba(0, 229, 255, 0.16), transparent 70%),
+    radial-gradient(45% 60% at 80% 30%, rgba(123, 92, 255, 0.18), transparent 70%),
+    radial-gradient(50% 60% at 60% 80%, rgba(255, 46, 136, 0.12), transparent 70%);
+  filter: blur(30px);
+  animation: aurora 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes aurora {
+  0%   { transform: rotate(0deg) scale(1); opacity: 0.7; }
+  50%  { transform: rotate(8deg) scale(1.12); opacity: 1; }
+  100% { transform: rotate(-6deg) scale(1.05); opacity: 0.8; }
+}
+
+/* ---------- 噪点纹理覆盖 ---------- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- 滚动显现 ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(46px);
+  transition: opacity 0.9s ease, transform 0.9s var(--ease-out);
+}
+.reveal.in-view { opacity: 1; transform: none; }
+
+/* 依次错峰入场 */
+.skills-grid .reveal:nth-child(2),
+.works-grid .reveal:nth-child(2) { transition-delay: 0.12s; }
+.skills-grid .reveal:nth-child(3),
+.works-grid .reveal:nth-child(3) { transition-delay: 0.24s; }
+.skills-grid .reveal:nth-child(4) { transition-delay: 0.36s; }
+
+/* ---------- 全局光标跟随高亮（由 JS 更新变量） ---------- */
+body {
+  --mx: 50%;
+  --my: 50%;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(340px circle at var(--mx) var(--my), rgba(0, 229, 255, 0.10), transparent 60%);
+  transition: opacity 0.3s;
+}
+
+/* ---------- 减少动态偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}

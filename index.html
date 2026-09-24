@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MarkSkecher · 个人简介</title>
+
+  <!-- 分模块样式 -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/effects.css">
+  <link rel="stylesheet" href="css/games.css">
+</head>
+<body>
+
+  <!-- 开场加载动画 -->
+  <div id="loader" class="loader">
+    <div class="loader-logo glitch" data-text="MS">MS</div>
+    <div class="loader-bar"><span></span></div>
+    <p class="loader-text">INITIALIZING<span class="loader-dots">...</span></p>
+  </div>
+
+  <!-- 自定义光标 -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- 顶部滚动进度条 -->
+  <div class="scroll-progress"><span id="scroll-bar"></span></div>
+
+  <!-- 粒子背景画布 -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- 噪点纹理覆盖层 -->
+  <div class="noise-overlay"></div>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="logo glitch" data-text="MS">MS</div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">首页</a></li>
+      <li><a href="#about">关于我</a></li>
+      <li><a href="#skills">技能栈</a></li>
+      <li><a href="#works">作品</a></li>
+      <li><a href="#games">街机厅</a></li>
+      <li><a href="#roadmap">轨迹</a></li>
+      <li><a href="#contact">联络</a></li>
+    </ul>
+    <div class="burger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- 首屏 Hero -->
+  <header id="hero" class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="aurora"></div>
+
+    <div class="hero-content">
+      <p class="hero-greet reveal">// Hello World, 我是</p>
+      <h1 class="hero-name glitch" data-text="MarkSkecher">MarkSkecher</h1>
+      <p class="hero-typing"><span id="typewriter"></span><span class="cursor">|</span></p>
+      <div class="hero-tags">
+        <span class="tag">&lt;代码 /&gt;</span>
+        <span class="tag">∑ 算法</span>
+        <span class="tag">⚡ 效率</span>
+        <span class="tag">☕ 咖啡驱动开发</span>
+      </div>
+      <a href="#about" class="btn-glow magnetic">探索更多<span class="btn-arrow">→</span></a>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="mouse"><div class="wheel"></div></div>
+      <span>SCROLL</span>
+    </div>
+  </header>
+
+  <!-- 关于我 -->
+  <section id="about" class="section">
+    <h2 class="section-title reveal"><span class="index">01.</span>关于我</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="avatar-frame">
+          <img src="images/avatar.jpg" alt="MarkSkecher 头像" onerror="this.classList.add('missing')">
+          <span class="avatar-fallback">MS</span>
+          <span class="avatar-status" title="在线"></span>
+        </div>
+        <p>我是一名<strong>编程创作者</strong>，也是一名游走在 <em>0 与 1</em> 之间的数字工匠。</p>
+        <p>对我来说，编程不只是让机器执行指令，而是把想象力编译成现实——每一行代码，都是通往未来的一次提交（<code>git commit</code>）。</p>
+        <p>我热衷于构建属于自己的软件作品，从算法到界面，从构想到落地，享受把一个空文件夹变成一整个宇宙的过程。</p>
+        <div class="stats">
+          <div class="stat"><span class="stat-num" data-count="100">0</span><span class="stat-label">% 热爱</span></div>
+          <div class="stat"><span class="stat-num" data-count="999">0</span><span class="stat-label">行 / 每日</span></div>
+          <div class="stat"><span class="stat-num" data-count="24">0</span><span class="stat-label">× 7 在线</span></div>
+          <div class="stat"><span class="stat-num" data-count="0">0</span><span class="stat-label">次放弃</span></div>
+        </div>
+      </div>
+      <div class="terminal reveal tilt">
+        <div class="terminal-bar">
+          <i class="dot red"></i><i class="dot yellow"></i><i class="dot green"></i>
+          <span class="terminal-title">markskecher@dev: ~</span>
+        </div>
+        <pre class="terminal-body"><code><span class="ln-prompt">$</span> whoami
+<span class="ln-out">MarkSkecher — 把想法编译成世界的开发者</span>
+<span class="ln-prompt">$</span> cat philosophy.txt
+<span class="ln-comment">// Talk is cheap. Show me the code.</span>
+<span class="ln-comment">// 世界是一本开源书，代码是我的批注。</span>
+<span class="ln-prompt">$</span> ./dream --execute
+<span class="ln-ok">[SUCCESS] 梦想进程已启动，永不退出</span>
+<span class="ln-prompt">$</span> <span class="terminal-cursor">█</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能栈 -->
+  <section id="skills" class="section">
+    <h2 class="section-title reveal"><span class="index">02.</span>技能栈</h2>
+    <div class="skills-grid">
+      <div class="skill-card reveal tilt">
+        <div class="skill-icon">⌨️</div>
+        <h3>编程语言</h3>
+        <p>Python · JavaScript · C++ · Java</p>
+        <div class="bar"><div class="bar-fill" style="--w:92%"></div></div>
+      </div>
+      <div class="skill-card reveal tilt">
+        <div class="skill-icon">🎨</div>
+        <h3>前端视界</h3>
+        <p>HTML · CSS · Canvas · 动效设计</p>
+        <div class="bar"><div class="bar-fill" style="--w:88%"></div></div>
+      </div>
+      <div class="skill-card reveal tilt">
+        <div class="skill-icon">🧠</div>
+        <h3>算法思维</h3>
+        <p>数据结构 · 动态规划 · 图论</p>
+        <div class="bar"><div class="bar-fill" style="--w:90%"></div></div>
+      </div>
+      <div class="skill-card reveal tilt">
+        <div class="skill-icon">🛠️</div>
+        <h3>工程工具</h3>
+        <p>Git · VS Code · Node.js · Linux</p>
+        <div class="bar"><div class="bar-fill" style="--w:85%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品 -->
+  <section id="works" class="section">
+    <h2 class="section-title reveal"><span class="index">03.</span>作品 · Works</h2>
+    <div class="works-grid">
+      <a class="work-card reveal tilt" href="javascript:void(0)">
+        <div class="work-glow"></div>
+        <span class="work-index">/01</span>
+        <h3>🚀 自制编程作品</h3>
+        <p>从 0 到 1 打造属于自己的软件宇宙，每一个像素都由自己渲染。</p>
+        <span class="work-link">查看源码 →</span>
+      </a>
+      <a class="work-card reveal tilt" href="javascript:void(0)">
+        <div class="work-glow"></div>
+        <span class="work-index">/02</span>
+        <h3>🌌 交互式视觉实验</h3>
+        <p>用 Canvas 与数学函数绘制粒子星系，让代码在屏幕上跳舞。</p>
+        <span class="work-link">进入展览 →</span>
+      </a>
+      <a class="work-card reveal tilt" href="javascript:void(0)">
+        <div class="work-glow"></div>
+        <span class="work-index">/03</span>
+        <h3>🤖 效率工具集</h3>
+        <p>写给自己用的自动化脚本与小工具，把重复的事交给机器。</p>
+        <span class="work-link">立即体验 →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 街机厅 · 小游戏 -->
+  <section id="games" class="section">
+    <h2 class="section-title reveal"><span class="index">04.</span>街机厅 · Arcade</h2>
+    <p class="section-lead reveal">工作之余手搓的三个小游戏，点击卡片直接开玩，键盘操控，别忘了 ESC 退出。</p>
+    <div class="games-grid">
+      <div class="game-card reveal" data-game="snake">
+        <div class="game-preview">🐍</div>
+        <h3>霓虹贪吃蛇</h3>
+        <p>方向键 / WASD 操控，吃掉能量球越长越快，撞墙咬到自己即 GAME OVER。</p>
+        <span class="btn-play">▶ 开始游戏</span>
+      </div>
+      <div class="game-card reveal" data-game="game2048">
+        <div class="game-preview">🔢</div>
+        <h3>霓虹 2048</h3>
+        <p>滑动合并同款数字，看看能不能在不死的情况下摸到 2048 的门槛。</p>
+        <span class="btn-play">▶ 开始游戏</span>
+      </div>
+      <div class="game-card reveal" data-game="memory">
+        <div class="game-preview">🃏</div>
+        <h3>记忆翻牌</h3>
+        <p>8 对程序员工具图标，用最少的步数全部配对，考验你的缓存命中率。</p>
+        <span class="btn-play">▶ 开始游戏</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 编程箴言轮播 -->
+  <div class="credo reveal">
+    <span class="credo-mark">"</span>
+    <p id="credo-text">算法的艺术在于：把复杂的问题，分解成简单的问题，再把简单的问题写成一堆 bug。</p>
+    <span class="credo-author" id="credo-author">—— 佚名</span>
+  </div>
+
+  <!-- 成长轨迹 -->
+  <section id="roadmap" class="section">
+    <h2 class="section-title reveal"><span class="index">05.</span>成长轨迹 · Roadmap</h2>
+    <div class="timeline">
+      <div class="t-item reveal">
+        <div class="t-card">
+          <time>2019</time>
+          <h3>✨ Hello World</h3>
+          <p>第一次在屏幕上打印出文字，从此掉进编程兔子洞，再也爬不出来。</p>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="t-card">
+          <time>2021</time>
+          <h3>🎮 第一个自制作品</h3>
+          <p>用 Scratch 和游戏制作入坑，把奇思妙想变成能跑起来的东西。</p>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="t-card">
+          <time>2023</time>
+          <h3>⌨️ 转向工程开发</h3>
+          <p>系统学习 Python / JavaScript / C++，开始用 Git 管理自己的代码宇宙。</p>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="t-card">
+          <time>2025</time>
+          <h3>🌌 全栈造梦进行时</h3>
+          <p>从网页动效到算法工具，从 0 到 1 打造 MarkSkecher 的个人作品集。</p>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="t-card">
+          <time>2026</time>
+          <h3>🚀 现在，你在这里</h3>
+          <p>正在阅读的这个页面，就是最新的提交。故事还在继续，to be continued…</p>
+        </div>
+      </div>
+    </div>
+    <div class="badges reveal">
+      <span class="badge">🏆 千行代码日更选手</span>
+      <span class="badge">🐞 Bug 驯兽师</span>
+      <span class="badge">🌙 深夜除灵（Debug）师</span>
+      <span class="badge">🚩 从 0 到 1 建造者</span>
+      <span class="badge">☕ C++ 咖啡编译器</span>
+    </div>
+  </section>
+
+  <!-- 联络 -->
+  <section id="contact" class="section contact">
+    <h2 class="section-title reveal center"><span class="index">06.</span>保持联络</h2>
+    <p class="contact-text reveal">如果你也有一个想做很久的项目，<br>让我们一起把它 <span class="neon">编译</span> 出来。</p>
+    <a href="mailto:scratch202161@outlook.com" class="btn-glow magnetic reveal">发送请求 &lt;/&gt;</a>
+  </section>
+
+  <footer class="footer">
+    <p>Designed &amp; Coded by <span class="neon">MarkSkecher</span> · © 2026</p>
+    <p class="footer-sub">console.log("感谢浏览，愿你的 bug 永远是 0");</p>
+  </footer>
+
+  <!-- 游戏弹窗 -->
+  <div class="game-modal" id="game-modal" aria-hidden="true">
+    <div class="game-modal-box">
+      <div class="game-modal-head">
+        <span class="game-modal-title" id="game-title">游戏</span>
+        <span class="game-score">SCORE <b id="game-score">0</b></span>
+        <button class="game-close" id="game-close" title="退出 (ESC)">✕</button>
+      </div>
+      <div class="game-stage" id="game-stage"></div>
+      <p class="game-hint" id="game-hint"></p>
+    </div>
+  </div>
+
+  <!-- 分模块脚本 -->
+  <script src="js/particles.js"></script>
+  <script src="js/typing.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/games/snake.js"></script>
+  <script src="js/games/game2048.js"></script>
+  <script src="js/games/memory.js"></script>
+  <script src="js/games-hub.js"></script>
+  <script src="js/quotes.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

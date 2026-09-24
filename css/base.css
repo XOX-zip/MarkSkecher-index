@@ -1,0 +1,55 @@
+/* ============================================================
+   base.css · 设计令牌 / 重置 / 全局排版
+   ============================================================ */
+
+:root {
+  --bg: #06080f;
+  --bg-soft: #0b0f1a;
+  --neon: #00e5ff;
+  --neon-2: #7b5cff;
+  --neon-3: #ff2e88;
+  --text: #c8d3f5;
+  --text-dim: #6b7aa8;
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(0, 229, 255, 0.15);
+  --radius: 14px;
+  --font-mono: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  overflow-x: hidden;
+  cursor: none; /* 交给自定义光标 */
+}
+
+a { cursor: none; }
+
+::selection { background: var(--neon); color: var(--bg); }
+
+/* 定制滚动条 */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--neon), var(--neon-2));
+  border-radius: 4px;
+}
+
+h1, h2, h3 { line-height: 1.15; }
+
+.neon {
+  color: var(--neon);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.8), 0 0 30px rgba(0, 229, 255, 0.4);
+}
+
+/* 触屏设备恢复默认光标 */
+@media (hover: none) {
+  body, a { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}
