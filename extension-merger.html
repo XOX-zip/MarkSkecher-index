@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scratch 扩展合并器 · MarkSkecher Tools</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/effects.css">
+  <link rel="stylesheet" href="css/tool-merger.css">
+</head>
+<body>
+
+  <!-- 自定义光标 -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- 顶部滚动进度条 -->
+  <div class="scroll-progress"><span id="scroll-bar"></span></div>
+
+  <!-- 粒子背景 -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <a class="logo glitch" href="index.html" data-text="MS">MS</a>
+    <ul class="nav-links">
+      <li><a href="index.html">← 返回主页</a></li>
+      <li><a href="#usage">使用说明</a></li>
+    </ul>
+  </nav>
+
+  <!-- 工具头部 -->
+  <header class="tool-hero">
+    <p class="hero-greet">// MarkSkecher Tools · v1.0</p>
+    <h1 class="tool-name glitch" data-text="Scratch 扩展合并器">Scratch 扩展合并器</h1>
+    <p class="tool-desc">选择多个 Scratch 扩展 <code>.js</code> 文件，一键合并为单个可直接加载的扩展文件。<br>纯浏览器本地处理，<strong>文件不会上传到任何服务器</strong>。</p>
+  </header>
+
+  <main class="tool-main">
+
+    <!-- 拖拽/选择区 -->
+    <div id="dropzone" class="dropzone reveal">
+      <input type="file" id="file-input" accept=".js,.txt" multiple hidden>
+      <div class="dropzone-icon">📦</div>
+      <p><strong>拖拽 .js 文件到这里</strong>，或 <span class="dz-btn">点击选择文件</span></p>
+      <p class="dropzone-sub">支持多选 · 可重复添加 · 列表顺序即为合并顺序</p>
+    </div>
+
+    <!-- 文件列表 -->
+    <section class="panel reveal" id="file-panel" hidden>
+      <div class="panel-head">
+        <h2>📄 待合并文件 <span class="count-chip" id="file-count">0</span></h2>
+        <span class="total-size" id="total-size">0 KB</span>
+      </div>
+      <ol class="file-list" id="file-list"></ol>
+      <div class="toolbar">
+        <button class="btn-mini danger" id="btn-clear">🗑 清空列表</button>
+      </div>
+    </section>
+
+    <!-- 合并选项 -->
+    <section class="panel reveal">
+      <div class="panel-head"><h2>⚙️ 合并选项</h2></div>
+      <label class="opt">
+        <input type="checkbox" id="opt-iife" checked>
+        <span><strong>作用域隔离包裹</strong>（推荐）<br><em>将每个扩展包进 IIFE，避免多个扩展的顶层变量 / 类名互相冲突</em></span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="opt-header" checked>
+        <span><strong>插入分隔注释</strong><br><em>在合并结果中标注每个文件的来源与顺序</em></span>
+      </label>
+      <label class="opt">
+        <input type="checkbox" id="opt-dedupe" checked>
+        <span><strong>重复积木检测</strong><br><em>扫描多个扩展中定义的相同 blockId / 积木原语，输出冲突报告（Scratch 中同名积木重复注册会导致报错）</em></span>
+      </label>
+    </section>
+
+    <!-- 操作按钮 -->
+    <div class="actions reveal">
+      <button class="btn-glow" id="btn-merge">⚡ 合并并预览</button>
+      <button class="btn-ghost" id="btn-download" disabled>⬇ 下载合并文件</button>
+      <button class="btn-ghost" id="btn-copy" disabled>📋 复制到剪贴板</button>
+    </div>
+
+    <!-- 检测报告 -->
+    <section class="panel report-panel reveal" id="report-panel" hidden>
+      <div class="panel-head"><h2>🔍 检测报告</h2></div>
+      <div id="report-body"></div>
+    </section>
+
+    <!-- 代码预览 -->
+    <section class="panel reveal" id="preview-panel" hidden>
+      <div class="panel-head">
+        <h2>👀 合并结果预览</h2>
+        <span class="total-size" id="merged-size"></span>
+      </div>
+      <pre class="code-preview" id="code-preview"></pre>
+    </section>
+
+    <!-- 使用说明 -->
+    <section class="panel reveal" id="usage">
+      <div class="panel-head"><h2>📖 使用说明</h2></div>
+      <ol class="usage-list">
+        <li>准备好若干个 Scratch 扩展文件（TurboWarp / Weizero 等支持的 <code>Scratch.extensions.register</code> 格式 <code>.js</code>）。</li>
+        <li>拖入或选择文件，用 ↑ ↓ 调整合并顺序，顺序会体现在最终文件里。</li>
+        <li>点击 <strong>合并并预览</strong>：工具会拼接文件、可选包裹 IIFE，并输出重复积木冲突报告。</li>
+        <li>点击 <strong>下载合并文件</strong> 得到 <code>merged-extension.js</code>，像普通扩展一样拖入项目即可加载。</li>
+        <li>⚠️ 若报告中存在<strong>重复积木</strong>，请手动删除靠后文件里的重复定义再合并，否则 Scratch 会忽略或报错。</li>
+      </ol>
+      <p class="usage-note">💡 原理：多个扩展共用全局 <code>Scratch</code> 对象，各自调用 register 注册互不冲突；冲突主要来自「顶层同名变量」与「重复积木定义」，本工具分别用 IIFE 包裹与静态扫描来化解 / 预警。</p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Designed &amp; Coded by <span class="neon">MarkSkecher</span> · <a class="foot-link" href="index.html">← 回到个人主页</a></p>
+  </footer>
+
+  <script src="js/particles.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/merger.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

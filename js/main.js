@@ -71,6 +71,7 @@
 (() => {
   const burger = document.querySelector(".burger");
   const menu = document.querySelector(".nav-links");
+  if (!burger || !menu) return;   // 子工具页可能没有汉堡菜单
   burger.addEventListener("click", () => menu.classList.toggle("open"));
   menu.querySelectorAll("a").forEach((a) =>
     a.addEventListener("click", () => menu.classList.remove("open"))

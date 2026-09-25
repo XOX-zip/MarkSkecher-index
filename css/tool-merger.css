@@ -1,0 +1,362 @@
+/* ============================================================
+   tool-merger.css · Scratch 扩展合并器 页面专属样式
+   ============================================================ */
+
+/* ---------- 工具页头部 ---------- */
+.tool-hero {
+  position: relative;
+  z-index: 1;
+  padding: 150px 6vw 40px;
+  text-align: center;
+}
+.tool-name {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 900;
+  background: linear-gradient(120deg, #fff 20%, var(--neon) 55%, var(--neon-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tool-name.glitch::before, .tool-name.glitch::after {
+  -webkit-text-fill-color: initial;
+  background: none;
+}
+.tool-desc {
+  margin-top: 18px;
+  color: var(--text-dim);
+  line-height: 2;
+  font-size: 0.98rem;
+}
+.tool-desc code {
+  font-family: var(--font-mono);
+  color: var(--neon);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 7px;
+}
+.tool-desc strong { color: var(--neon); }
+
+/* ---------- 主体容器 ---------- */
+.tool-main {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 10px 5vw 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+/* ---------- 拖拽区 ---------- */
+.dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 46px 24px;
+  text-align: center;
+  color: var(--text);
+  background: var(--card);
+  cursor: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.dropzone.dragover {
+  border-color: var(--neon);
+  background: rgba(0, 229, 255, 0.06);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.25) inset;
+}
+.dropzone-icon {
+  font-size: 2.6rem;
+  margin-bottom: 14px;
+  animation: bob 3s ease-in-out infinite;
+}
+.dz-btn {
+  color: var(--neon);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dropzone-sub {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* ---------- 通用面板 ---------- */
+.panel {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.panel-head h2 {
+  font-size: 1.05rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.count-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--bg);
+  background: var(--neon);
+  border-radius: 999px;
+  padding: 2px 10px;
+}
+.total-size {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* ---------- 文件列表 ---------- */
+.file-list { list-style: none; }
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  transition: background 0.25s, border-color 0.25s;
+}
+.file-item:hover {
+  background: var(--card);
+  border-color: var(--border);
+}
+.file-idx {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--neon-2);
+  min-width: 2em;
+}
+.file-name {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-size {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.file-ops button {
+  width: 26px; height: 26px;
+  margin-left: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  cursor: none;
+  transition: 0.25s;
+}
+.file-ops button:hover {
+  color: var(--neon);
+  border-color: var(--neon);
+}
+.file-ops button[data-act="remove"]:hover {
+  color: var(--neon-3);
+  border-color: var(--neon-3);
+}
+.toolbar { margin-top: 14px; text-align: right; }
+
+.btn-mini {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 16px;
+  cursor: none;
+  transition: 0.25s;
+}
+.btn-mini:hover { color: var(--neon); border-color: var(--neon); }
+.btn-mini.danger:hover { color: var(--neon-3); border-color: var(--neon-3); }
+
+/* ---------- 选项 ---------- */
+.opt {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 12px 10px;
+  border-radius: 10px;
+  cursor: none;
+  transition: background 0.25s;
+}
+.opt:hover { background: var(--card); }
+.opt input {
+  appearance: none;
+  width: 18px; height: 18px;
+  margin-top: 3px;
+  flex: none;
+  border: 2px solid var(--text-dim);
+  border-radius: 5px;
+  position: relative;
+  cursor: none;
+  transition: 0.25s;
+}
+.opt input:checked {
+  border-color: var(--neon);
+  background: var(--neon);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+}
+.opt input:checked::after {
+  content: "✓";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--bg);
+  font-weight: 700;
+}
+.opt strong { color: #fff; font-size: 0.95rem; }
+.opt em {
+  font-style: normal;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+/* ---------- 操作按钮 ---------- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+.actions .btn-glow { margin-top: 0; border: none; font-size: 1rem; cursor: none; }
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--neon);
+  background: transparent;
+  border: 1.5px solid var(--neon);
+  border-radius: 999px;
+  padding: 13px 28px;
+  cursor: none;
+  transition: 0.3s;
+}
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+}
+.btn-ghost:disabled {
+  color: var(--text-dim);
+  border-color: rgba(107, 122, 168, 0.35);
+  opacity: 0.55;
+}
+
+/* ---------- 报告 ---------- */
+.report-ok {
+  font-family: var(--font-mono);
+  color: #28c840;
+  padding: 6px 0;
+}
+.report-warn-title {
+  color: var(--neon-3);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.dup-item {
+  background: rgba(255, 46, 136, 0.07);
+  border: 1px solid rgba(255, 46, 136, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 0.86rem;
+  line-height: 1.8;
+}
+.dup-item code {
+  font-family: var(--font-mono);
+  color: var(--neon-3);
+}
+.dup-item .dup-files { color: var(--text-dim); }
+
+/* ---------- 代码预览 ---------- */
+.code-preview {
+  max-height: 420px;
+  overflow: auto;
+  background: #080b13;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* ---------- 使用说明 ---------- */
+.usage-list {
+  margin-left: 20px;
+  color: var(--text);
+  line-height: 2.1;
+  font-size: 0.92rem;
+}
+.usage-list code {
+  font-family: var(--font-mono);
+  color: var(--neon);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.85em;
+}
+.usage-note {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--neon-2);
+  background: var(--card);
+  border-radius: 0 10px 10px 0;
+  color: var(--text-dim);
+  font-size: 0.86rem;
+  line-height: 1.9;
+}
+.usage-note code {
+  font-family: var(--font-mono);
+  color: var(--neon);
+}
+
+/* ---------- 页脚链接 ---------- */
+.foot-link {
+  color: var(--neon);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--neon);
+}
+
+/* ---------- toast 提示 ---------- */
+.toast {
+  position: fixed;
+  bottom: 34px; left: 50%;
+  transform: translate(-50%, 20px);
+  z-index: 9000;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--bg);
+  background: var(--neon);
+  border-radius: 999px;
+  padding: 10px 26px;
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s var(--ease-out);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast.error { background: var(--neon-3); color: #fff; box-shadow: 0 0 24px rgba(255, 46, 136, 0.55); }

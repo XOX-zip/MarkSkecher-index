@@ -34,6 +34,7 @@
 | 🕹️ **街机厅** | 三个弹窗即玩的小游戏（详见下表） |
 | 💬 **编程箴言** | 经典名言淡入淡出轮播 |
 | 🛤️ **成长轨迹** | 2019 → 2026 霓虹时间线 + 成就徽章 |
+| 🧩 **扩展合并器** | 独立工具页 `extension-merger.html`：多个 Scratch 扩展 .js 在线合并为单文件 |
 | 📮 **保持联络** | 邮件直达按钮 |
 
 ## 🕹️ 内置小游戏
@@ -59,13 +60,15 @@
 
 ```
 MarkSkecher/
-├── index.html              # 页面骨架
+├── index.html              # 主页骨架
+├── extension-merger.html   # 🧩 Scratch 扩展合并器（独立工具页）
 ├── css/
 │   ├── base.css            # 设计令牌 (CSS Variables) / 重置 / 全局排版
 │   ├── layout.css          # 导航 / Hero / 区块 / 响应式
 │   ├── components.css      # 按钮 / 卡片 / 终端 / 头像框 / 光标 / 加载器
 │   ├── effects.css         # 故障文字 / 光晕 / 极光 / 噪点 / 滚动显现
-│   └── games.css           # 街机厅 / 游戏弹窗 / 时间线 / 徽章
+│   ├── games.css           # 街机厅 / 游戏弹窗 / 时间线 / 徽章
+│   └── tool-merger.css     # 扩展合并器页面专属样式
 └── js/
     ├── particles.js        # 粒子星网引擎（连线 / 斥力 / 点击脉冲）
     ├── typing.js           # 打字机效果
@@ -76,6 +79,7 @@ MarkSkecher/
     │   └── memory.js       # 🃏 记忆翻牌
     ├── games-hub.js        # 游戏弹窗调度（注册表模式）
     ├── quotes.js           # 编程箴言轮播
+    ├── merger.js           # 🧩 扩展合并核心（IIFE 包裹 / 重复积木扫描 / 下载）
     └── main.js             # 滚动显现 / 计数 / 导航高亮 / 汉堡菜单
 ```
 
@@ -125,6 +129,16 @@ npx serve .
 | 箴言内容 | `js/quotes.js` 的 `QUOTES` 数组 |
 | 技能 / 作品 / 时间线 | `index.html` 对应 section 的文本与 `data-count` / `--w` 数值 |
 | 新增小游戏 | 参考 `js/games/snake.js` 注册到 `window.GameRegistry`，并在导航区加一张 `data-game` 卡片 |
+
+## 🧩 Scratch 扩展合并器
+
+独立工具页，部署后访问 `<站点地址>/extension-merger.html`：
+
+- 拖拽 / 多选若干 `Scratch.extensions.register` 格式的扩展 `.js`，可排序
+- **作用域隔离**：每个扩展包裹进 IIFE，避免多文件顶层变量 / 类名冲突
+- **重复积木检测**：静态扫描 `blockId`、经典积木数组与扩展 ID，输出跨文件冲突报告
+- 合并结果在线预览，一键下载 `merged-extension.js` 或复制到剪贴板
+- 纯前端本地处理，文件不会上传到任何服务器
 
 ## 🛠️ 技术说明
 
